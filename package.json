@@ -5,7 +5,7 @@
   "main": "bot.js",
   "author": "bob4koolest",
   "dependencies": {
-    "node": "12.16.2",
+    "node": "14.x",
     "@discordjs/opus": "^0.4.0",
     "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
     "discord.js": "^12.3.1",
