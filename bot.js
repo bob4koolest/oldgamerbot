@@ -217,10 +217,28 @@ client.on("message", function(message) {
   } else if (command === "vc") {
     const ytdl = require('ytdl-core-discord');
     async function play(connection, url) {
-      connection.play(await ytdl(url), { type: 'opus' });
+      if (args[2] === "volume" || args[4] === "volume" || args[2] === "from" || args[4] === "from") {
+
+        var starttime = 0;
+        if (args[2] === "from") {
+          var timestamp = args[3].split(":");
+          starttime = timestamp[0] * 60000 + timestamp[1] * 1000;
+        } else if (args[4] === "from") {
+          var timestamp = args[5].split(":");
+          starttime = timestamp[0] * 60000 + timestamp[1] * 1000;
+        }
+        if (args[2] === "volume") {
+          connection.play(await ytdl(url), { type: 'opus', filter: 'audioonly', volume: args[3], seek: starttime });
+        } else if (args[4] === "volume") {
+          connection.play(await ytdl(url), { type: 'opus', filter: 'audioonly', volume: args[5], seek: starttime });
+        }
+
+      } else {
+        connection.play(await ytdl(url), { type: 'opus', volume: 1 });
+      }
     }
     if (args[0] === "join") {
-    message.channel.send("Joining/updating the voice channel that you're in. If you're not in one join and try again.");
+      message.channel.send("Joining/updating the voice channel that you're in. If you're not in one join and try again.");
         if (message.member.voice.channel) {
           async function joinvc() {
             const connection = await message.member.voice.channel.join();
@@ -256,7 +274,7 @@ client.on("message", function(message) {
       const ggEmbed = new Discord.MessageEmbed()
         .setColor('#0099ff')
         .setTitle("VC Error")
-        .setDescription("Invalid argument. The proper ones are `join` and `leave`. \n\nThe second argument is optional assuming you are joining the vc but can be either a URL or preset to `sovietanthem`, `minecraft`, `chill`, `rickroll`, or `mute`. If not specified, Gamer Bot will be simply vibe in the vc until you specify a song. \n\n`url` Plays whatever URL specified. Example: `!vc join https://www.youtube.com/watch?v=dQw4w9WgXcQ` \n\n**Presets**\n`minecraft` Relaxing Minecraft music with ambient rain sounds. \n`sovietanthem` Plays the Soviet Anthem \n`chill` Chill lofi straight from ChilledCow.\n `rickroll` Mercilessly rickroll people in VCs\n `mute` Mutes Gamer Bot \n\nYou can also change or mute the song using this same command if Gamer Bot is already in the vc. \n\nExample:\n`!vc join minecraft`")
+        .setDescription("Invalid argument. The proper ones are `join` and `leave`. \n\nThe second argument is optional assuming you are joining the vc but can be either a URL or preset to `sovietanthem`, `minecraft`, `chill`, `rickroll`, or `mute`. If not specified, Gamer Bot will be simply vibe in the vc until you specify a song. \n\n`url` Plays whatever URL specified. Example: `!vc join https://www.youtube.com/watch?v=dQw4w9WgXcQ` \n\n**Presets**\n`minecraft` Relaxing Minecraft music with ambient rain sounds. \n`sovietanthem` Plays the Soviet Anthem \n`chill` Chill lofi straight from ChilledCow.\n `rickroll` Mercilessly rickroll people in VCs\n `mute` Mutes Gamer Bot \n\nYou can also change or mute the song using this same command if Gamer Bot is already in the vc. \n\nExample:\n`!vc join minecraft`\n\n**Optional Switches**\n`volume` Sets the volume from 0-1\n`from` Starts from a timestamp specified. Ex. `4:35` will play at the 4 minute 35 second mark. Due to technical difficulties, the feature is NOT yet avaliable.\n\nExample:\n`!vc join minecraft volume 0.8 from 2:30`")
       message.channel.send(ggEmbed);
     }
   } else if (command === "help") {
