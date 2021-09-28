@@ -21,16 +21,6 @@ client.on("message", function(message) {
     const numArgs = args.map(x => parseFloat(x));
     const sum = numArgs.reduce((counter, x) => counter += x);
     message.reply(` the result is ${sum}!`);
-  } else if (command === "acadecsun") {
-    const ggEmbed = new Discord.MessageEmbed()
-    	.setColor('#0099ff')
-    	.setTitle('Sun Study Card')
-    	.setDescription('--99% of mass in Solar System\n--Gravity is 28* as strong as on Earth\n--Spectral lines indicate presence of over 70 elements\n--Sun isn\'t solid, rotates around equater in 25 days and poles in 35 days (rotates west to east)')
-      .addField('Layers of the Sun:', '```Corona(outermost)\nChromosphere\nPhotosphere (surface)\nConvection Zone\nRadiation Zone\nCore```Edge of the sun is called the **limb**', true)
-      .addField('Composition:', '```Outer -- 71% hydrogen, 27% helium, 2% other\nInner -- 38% helium```', true)
-    	.setThumbnail("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/The_Sun_by_the_Atmospheric_Imaging_Assembly_of_NASA%27s_Solar_Dynamics_Observatory_-_20100819.jpg/220px-The_Sun_by_the_Atmospheric_Imaging_Assembly_of_NASA%27s_Solar_Dynamics_Observatory_-_20100819.jpg")
-    	.setTimestamp()
-    message.reply(ggEmbed);
   } else if (command === "hi") {
     message.reply(" hi!")
   } else if (command === "random") {
